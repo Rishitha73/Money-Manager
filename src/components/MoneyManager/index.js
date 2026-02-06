@@ -56,6 +56,26 @@ class MoneyManager extends Component {
     }))
   }
 
+  deleteTransaction = id => {
+    this.setState(prev => {
+      const deletedItem = prev.transactionsList.find(each => each.id === id)
+
+      const updatedList = prev.transactionsList.filter(each => each.id !== id)
+
+      return {
+        transactionsList: updatedList,
+        income:
+          deletedItem.type === 'INCOME'
+            ? prev.income - Number(deletedItem.amount)
+            : prev.income,
+        expenses:
+          deletedItem.type === 'EXPENSES'
+            ? prev.expenses - Number(deletedItem.amount)
+            : prev.expenses,
+      }
+    })
+  }
+
   render() {
     const {income, expenses, title, amount, type, transactionsList} = this.state
 
@@ -113,7 +133,11 @@ class MoneyManager extends Component {
 
             <ul>
               {transactionsList.map(each => (
-                <TransactionItem key={each.id} transactionDetails={each} />
+                <TransactionItem
+                  key={each.id}
+                  transactionDetails={each}
+                  deleteTransaction={this.deleteTransaction}
+                />
               ))}
             </ul>
           </div>
