@@ -1,0 +1,8 @@
+.transaction-item {
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid #d7dfe9;
+  padding: 12px 20px;
+  list-style: none;
+  margin-top: 10px;
+}
